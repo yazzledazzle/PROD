@@ -6,7 +6,7 @@ import openpyxl
 import os
 import requests
 import base64
-
+import csv
 
 Waitlist_latestdf = 'DATA/PROCESSED DATA/PUBLIC HOUSING/Waitlist_trend_latest.csv'
 Waitlist_trend_longdf = 'DATA/PROCESSED DATA/PUBLIC HOUSING/Waitlist_trend_long.csv'
@@ -1183,6 +1183,8 @@ def SHS_client_groups():
         df['DATE'] = pd.to_datetime(df['DATE'], format='%Y-%b-%d')
         df['DATE'] = df['DATE'] + pd.offsets.MonthEnd(0)
     population = pd.read_csv(PopulationStateMonthlydf)
+    #columns to upper
+    population.columns = population.columns.str.upper()
     population['DATE'] = pd.to_datetime(population['DATE'], format='%d/%m/%Y', dayfirst=True)
     population = population.sort_values(by='DATE', ascending=True)
     regions = df.columns[3:12]
@@ -1819,7 +1821,7 @@ def external_resources():
 
 def airbnb_wa():
     df_wa_total = pd.read_csv(AirbnbWATotaldf)
-    df_wa_total['date'] = pd.to_datetime(df_wa_total['date'], format='%d/%m/%Y', dayfirst=True, errors='coerce')
+    df_wa_total['date'] = pd.to_datetime(df_wa_total['date'], format='%Y-%m-%d', errors='coerce')
     df_wa_total = df_wa_total.sort_values(by='date', ascending=True)
     df_wa_total = df_wa_total.rename(columns={'count_listings': 'count'})
     df_wa_total['date'] = df_wa_total['date'].astype(str)
@@ -2145,7 +2147,7 @@ def total(df):
     df = df[df['Sex'] == 'Total']
     df = df.drop(columns='Sex')
     save_to = 'DATA/PROCESSED DATA/Population/Population_State_Total'
-    df.to_csv(save_to + 'csv', index=False)
+    df.to_csv(save_to + '.csv', index=False)
     monthlyStatetotal(save_to)
     columns = df.columns.tolist()
     columns.remove('WA_Population')
@@ -2379,9 +2381,11 @@ def get_airbnb(df, df_name):
         df = df.rename(columns={'id_count': 'count_listings'})
         df['date'] = df_name
         df_summaries[df_summary_name] = df
+
     df_summary = pd.concat(df_summaries.values())
     latest_date = df_summary['date'].max()
     latest_date = pd.to_datetime(latest_date).strftime('%d/%m/%Y')
+    
     try:
         airbnb0 = pd.read_csv('DATA/PROCESSED DATA/Airbnb/airbnb_summary.csv')
         airbnb0 = pd.concat([airbnb0, df_summary])
@@ -2395,11 +2399,13 @@ def get_airbnb(df, df_name):
 
 def state_total(df, df_name):
     filenames = os.listdir('DATA/SOURCE DATA/Airbnb')
-    airbnbwa0 = pd.read_csv(AirbnbWATotaldf)
+    airbnbwa0 = pd.read_csv('DATA/PROCESSED DATA/Airbnb/Airbnb_WAtotals.csv')
     dfs = {}
     df_summaries = {}
+
     df['date'] = df_name
     dfs[df_name] = df
+    all_details = pd.concat(dfs.values())
     for df_name, df in dfs.items():
         df_summary_name = f"{df_name}_summary"
         df = df.groupby(['room_type']).agg({'id': 'count', 'price': ['mean', 'median'], 'availability_365': ['mean', 'median']})
@@ -2409,32 +2415,71 @@ def state_total(df, df_name):
         df['date'] = df_name
         df_summaries[df_summary_name] = df
     df_summary_wa = pd.concat(df_summaries.values())
-    df_summary_wa = df_summary_wa.drop_duplicates()
+    
     try:
         df_summary_wa = pd.concat([airbnbwa0, df_summary_wa])
-        df_summary_wa = df_summary_wa.drop_duplicates()
     except:
         pass
-    df_summary_wa.to_csv(AirbnbWATotaldf, index=False)
+
+    df_summary_wa.to_csv('DATA/PROCESSED DATA/Airbnb_WAtotals.csv', index=False)
+    all_details.to_csv('DATA/PROCESSED DATA/Airbnb_full.csv', index=False)
     return
 
+def locs():
+    df = pd.read_csv('DATA/PROCESSED DATA/Airbnb/airbnb_summary.csv')
+    locs = pd.read_csv('DATA/Data descriptions/australian_postcodes.csv')
+    #filter locs to WA
+    locs = locs[locs['state'] == 'WA']
+    #drop any sa4name = Northern Territory - Outback
+    locs = locs[locs['sa4name'] != 'Northern Territory - Outback']
+    #drop locs columns id, dc, type, state, status, sa3, sa4, region, SA1_MAINCODE_2011,	SA1_MAINCODE_2016,	SA2_MAINCODE_2016, SA3_CODE_2016, SA4_CODE_2016,	RA_2011	RA_2016	MMM_2015	MMM_2019	ced	altitude	chargezone	phn_code	phn_name
+    locs = locs.drop(columns=['id', 'dc', 'type', 'state', 'status', 'sa3', 'sa4', 'sa3name', 'sa4name', 'region', 'SA1_MAINCODE_2011',	'SA1_MAINCODE_2016',	'SA2_MAINCODE_2016', 'SA3_CODE_2016', 'SA4_CODE_2016',	'RA_2011',	'RA_2016',	'MMM_2015',	'MMM_2019',	'altitude',	'chargezone',	'phn_code', 'long', 'lat', 'Lat_precise', 'Long_precise'])
+    map = pd.read_csv('DATA/PROCESSED DATA/Airbnb/Airbnb_map.csv')
+    map_old = map['old'].unique()
+
+
+    df_full = pd.read_csv('DATA/PROCESSED DATA/Airbnb/Airbnb_summary.csv')
+    if df_full['neighbourhood'].isin(map_old).any():
+        df_full['neighbourhood'] = df_full['neighbourhood'].replace(map_old, map['new'])
+
+    df_full = pd.merge(df_full, locs, left_on='neighbourhood', right_on='locality', how='left')
+
+    if df['neighbourhood'].isin(map_old).any():
+        df['neighbourhood'] = df['neighbourhood'].replace(map_old, map['new'])
+    df = pd.merge(df, locs, left_on='neighbourhood', right_on='locality', how='left')
+
+    df_full.to_csv('DATA/PROCESSED DATA/Airbnb/Airbnb_full.csv', index=False)
+    df.to_csv('DATA/PROCESSED DATA/Airbnb/airbnb_summary.csv', index=False)
+    return
 
 def getPopulation():
     method = "get"
-    url = https://api.data.abs.gov.au/data/ABS,ERP_Q,1.0.0/1.2+1+3.A80+A75+A70+A65+A60+A55+A50+A45+A40+A35+A25+A30+A20+A15+A10+A59+A04+TOT..Q?startPeriod=2011-Q1
-    auth_string = f"{'x-api-key'}:{abskey}"
+    url = "https://api.data.abs.gov.au/data/ABS,ERP_Q,1.0.0/1.2+1+3.A80+A75+A70+A65+A60+A55+A50+A45+A40+A35+A25+A30+A20+A15+A10+A59+A04+TOT..Q?startPeriod=2011-Q1"
+    auth_string = f"{'x-api-key'}:{'jiYlvforua1zyRXPV8t7Q49RSoCWvoDW1JMD884M'}"
     auth_string = auth_string.encode("ascii")
     auth_string = base64.b64encode(auth_string)
     headers = {
         'Accept': 'application/vnd.sdmx.data+csv;labels=both',
         'Authorization' : f"Basic {auth_string.decode('ascii')}"
     }
-    population = requests.request(method, url, headers=headers, auth=None)
-    population.to_csv('DATA/SOURCE DATA/Population/Population.csv', index=False)
+    response = requests.request(method, url, headers=headers, auth=None)
+
+    if response.status_code == 200:
+        content = response.content.decode('utf-8')
+        csv_lines = content.splitlines()
+        csv_reader = csv.reader(csv_lines)
+        
+        # Save the CSV content to a file
+        with open(PopulationNewFile, 'w', newline='') as csv_file:
+            csv_writer = csv.writer(csv_file)
+            for row in csv_reader:
+                csv_writer.writerow(row)
     return
 
 
+
 if __name__ == "__main__":
-    data_updates()
+    getPopulation()
+    import_population_data()
     home()
 

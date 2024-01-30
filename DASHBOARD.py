@@ -1183,6 +1183,8 @@ def SHS_client_groups():
         df['DATE'] = pd.to_datetime(df['DATE'], format='%Y-%b-%d')
         df['DATE'] = df['DATE'] + pd.offsets.MonthEnd(0)
     population = pd.read_csv(PopulationStateMonthlydf)
+    #columns to upper
+    population.columns = population.columns.str.upper()
     population['DATE'] = pd.to_datetime(population['DATE'], format='%d/%m/%Y', dayfirst=True)
     population = population.sort_values(by='DATE', ascending=True)
     regions = df.columns[3:12]
@@ -1819,9 +1821,10 @@ def external_resources():
 
 def airbnb_wa():
     df_wa_total = pd.read_csv(AirbnbWATotaldf)
-    df_wa_total['date'] = pd.to_datetime(df_wa_total['date'], format='%Y-%m-%d', errors='coerce')
+    df_wa_total['date'] = pd.to_datetime(df_wa_total['date'], format='%d/%m/%Y', dayfirst=True, errors='coerce')
     df_wa_total = df_wa_total.sort_values(by='date', ascending=True)
     df_wa_total = df_wa_total.rename(columns={'count_listings': 'count'})
+    
     df_wa_total['date'] = df_wa_total['date'].astype(str)
     fig = go.Figure()
     for room_type in df_wa_total['room_type'].unique():
@@ -2035,7 +2038,6 @@ def upload_data():
             get_airbnb(airbnb, filename)
             state_total(airbnb, filename)
             locs()
-            full_clean()
     return
 
 def as_text(value):
@@ -2146,7 +2148,7 @@ def total(df):
     df = df[df['Sex'] == 'Total']
     df = df.drop(columns='Sex')
     save_to = 'DATA/PROCESSED DATA/Population/Population_State_Total'
-    df.to_csv(save_to + 'csv', index=False)
+    df.to_csv(save_to + '.csv', index=False)
     monthlyStatetotal(save_to)
     columns = df.columns.tolist()
     columns.remove('WA_Population')
@@ -2461,15 +2463,15 @@ def getPopulation():
         'Accept': 'application/vnd.sdmx.data+csv;labels=both',
         'Authorization' : f"Basic {auth_string.decode('ascii')}"
     }
-    population = requests.request(method, url, headers=headers, auth=None)
+    response = requests.request(method, url, headers=headers, auth=None)
 
-    if population.status_code == 200:
-        content = population.content.decode('utf-8')
+    if response.status_code == 200:
+        content = response.content.decode('utf-8')
         csv_lines = content.splitlines()
         csv_reader = csv.reader(csv_lines)
         
         # Save the CSV content to a file
-        with open('population_data.csv', 'w', newline='') as csv_file:
+        with open(PopulationNewFile, 'w', newline='') as csv_file:
             csv_writer = csv.writer(csv_file)
             for row in csv_reader:
                 csv_writer.writerow(row)
@@ -2478,7 +2480,6 @@ def getPopulation():
 
 
 if __name__ == "__main__":
-    getPopulation()
-    import_population_data()
+    data_updates()
     home()
 
