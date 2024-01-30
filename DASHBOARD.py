@@ -2450,9 +2450,6 @@ def locs():
     df.to_csv('DATA/PROCESSED DATA/Airbnb/airbnb_summary.csv', index=False)
     return
 
-def full_clean():
-
-
 def getPopulation():
     method = "get"
     url = "https://api.data.abs.gov.au/data/ABS,ERP_Q,1.0.0/1.2+1+3.A80+A75+A70+A65+A60+A55+A50+A45+A40+A35+A25+A30+A20+A15+A10+A59+A04+TOT..Q?startPeriod=2011-Q1"
