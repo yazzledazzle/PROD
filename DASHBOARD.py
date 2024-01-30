@@ -1825,7 +1825,7 @@ def airbnb_wa():
     df_wa_total = df_wa_total.sort_values(by='date', ascending=True)
     df_wa_total = df_wa_total.rename(columns={'count_listings': 'count'})
     
-    df_wa_total['date'] = df_wa_total['peanut'].astype(str)
+    df_wa_total['date'] = df_wa_total['date'].astype(str)
     fig = go.Figure()
     for room_type in df_wa_total['room_type'].unique():
         df_room_type = df_wa_total[df_wa_total['room_type'] == room_type]
