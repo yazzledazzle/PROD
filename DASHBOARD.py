@@ -2451,22 +2451,11 @@ def locs():
     return
 
 def full_clean():
-    df = pd.read_csv('DATA/PROCESSED DATA/Airbnb/Airbnb_full.csv')
-    colstokeep = ['neighbourhood',	'room_type','count_listings',	'price_mean',	'price_median',	'availability_365_mean', 'availability_365_median','date']
-    df = df[colstokeep]
-    
 
-    print(df.columns)
-    df_allgeo = df.groupby(['date', 'room_type', 'SA2_NAME_2016', 'SA3_NAME_2016', 'SA4_NAME_2016', 'ced', 'lgaregion', 'lgacode', 'electorate', 'electoraterating']).agg({'count_listings': 'count', 'price_mean': ['mean'], 'price_median': ['median'], 'availability_365_mean': ['mean'], 'availability_365_median': ['median']})
-    df_allgeo.columns = ['_'.join(col) for col in df_allgeo.columns]
-    df_allgeo = df_allgeo.reset_index()
-
-    df_allgeo.to_csv('DATA/PROCESSED DATA/Airbnb/Airbnb_allgeo.csv', index=False)
-    return
 
 def getPopulation():
     method = "get"
-    url = https://api.data.abs.gov.au/data/ABS,ERP_Q,1.0.0/1.2+1+3.A80+A75+A70+A65+A60+A55+A50+A45+A40+A35+A25+A30+A20+A15+A10+A59+A04+TOT..Q?startPeriod=2011-Q1
+    url = "https://api.data.abs.gov.au/data/ABS,ERP_Q,1.0.0/1.2+1+3.A80+A75+A70+A65+A60+A55+A50+A45+A40+A35+A25+A30+A20+A15+A10+A59+A04+TOT..Q?startPeriod=2011-Q1"
     auth_string = f"{'x-api-key'}:{abskey}"
     auth_string = auth_string.encode("ascii")
     auth_string = base64.b64encode(auth_string)
