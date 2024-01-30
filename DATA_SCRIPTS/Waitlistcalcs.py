@@ -1,28 +1,18 @@
-import pandas as pd
-from openpyxl import load_workbook
-
-source_file = 'DATA/SOURCE DATA/Public housing/Waitlist_trend.xlsx'
-current_file = 'DATA/PROCESSED DATA/PUBLIC HOUSING/Waitlist_trend.csv'
-population_source_file = 'DATA/PROCESSED DATA/Population/Population_WA_Total_monthly.csv'
-save = 'DATA/PROCESSED DATA/PUBLIC HOUSING/Waitlist_trend_long.csv'
-save_latest = 'DATA/PROCESSED DATA/PUBLIC HOUSING/Waitlist_trend_latest.csv'
-dataset = 'Waitlist trend - statewide'
-
-def load_data(source_file):
+def Waitlist_load_data(source_file):
     new_waitlist = pd.read_excel(source_file)
-    current = pd.read_csv(current_file)
+    current = pd.read_csv(Waitlist_trend_longdf)
     df = pd.concat([current, new_waitlist])
     df = df.drop_duplicates()
     return df
 
-def clear_new_data(source_file):
+def Waitlist_clear_new_data(source_file):
     wb = load_workbook(source_file)
     ws = wb.active
     ws.delete_rows(2, ws.max_row)
     wb.save(source_file)
     return
 
-def convert_to_long_form(df):
+def Waitlist_convert_to_long_form(df):
     df_long = df.melt(id_vars=["Date"], 
                       var_name="Category", 
                       value_name="Number")
@@ -31,7 +21,7 @@ def convert_to_long_form(df):
     df_long = df_long.dropna(subset=['Number'])
     return df_long
 
-def gap_filler(df_long):
+def Waitlist_gap_filler(df_long):
     missing_dates = []
     Category_dfs = []
     for Category in df_long['Category'].unique():
@@ -57,7 +47,7 @@ def gap_filler(df_long):
     df_long['Number'] = df_long['Number'].astype(float)
     return df_long
 
-def FYtdchange(df_long):
+def Waitlist_FYtdchange(df_long):
     for Category in df_long['Category'].unique():
         
         df_long_Category = df_long[df_long['Category'] == Category].copy()
@@ -77,7 +67,7 @@ def FYtdchange(df_long):
         df_long = pd.concat([df_long, df_long_Category])
     return df_long
 
-def month_diff(df_long):
+def Waitlist_month_diff(df_long):
     df_long['Estimate flag - prior month'] = ''
     for Category in df_long['Category'].unique():
         df_long_Category = df_long[df_long['Category'] == Category].copy()
@@ -101,7 +91,7 @@ def month_diff(df_long):
     return df_long
 
 
-def year_diff(df_long):
+def Waitlist_year_diff(df_long):
     df_long['Estimate flag - prior year'] = ''
     for Category in df_long['Category'].unique():
         df_long_Category = df_long[df_long['Category'] == Category].copy()
@@ -123,7 +113,7 @@ def year_diff(df_long):
         df_long = pd.concat([df_long, df_long_Category])
     return df_long
 
-def calculate_12_month_average(df_long):
+def Waitlist_calculate_12_month_average(df_long):
     def average_last_12_months(row):
         start_date = row['Date'] - pd.offsets.MonthEnd(11)
         end_date = row['Date']
@@ -148,7 +138,7 @@ def calculate_12_month_average(df_long):
     df_long['12 month rolling average - prior year change (per cent)'] = df_long['12 month rolling average - prior year change'] / df_long['12 month rolling average'] * 100
     return df_long
 
-def calculate_cydiff(df_long):
+def Waitlist_calculate_cydiff(df_long):
     df_long['helper'] = df_long['Date'] - pd.offsets.YearEnd(1)
     df_long['helper2'] = df_long['helper'].apply(lambda x: df_long['Number'][df_long['Date']==x].values[0] if x in df_long['Date'].values else float('nan'))
     df_long['Difference - calendar year to date'] = df_long['Number'] - df_long['helper2']
@@ -156,7 +146,7 @@ def calculate_cydiff(df_long):
     df_long = df_long.drop(['helper', 'helper2'], axis=1)
     return df_long
 
-def calculate_Priority_proportion(df_long):
+def Waitlist_calculate_Priority_proportion(df_long):
     new_rows = pd.DataFrame()
     for date in df_long['Date'].unique():
         df_long_date = df_long[df_long['Date'] == date].copy()
@@ -191,7 +181,7 @@ def calculate_Priority_proportion(df_long):
 
 
 
-def date_to_quarter_end(date):
+def Waitlist_date_to_quarter_end(date):
     if date.month in [1, 2]:
         return pd.Timestamp(f'31-12-{(date.year)-1}')
     elif date.month in [4, 5]:
@@ -203,13 +193,13 @@ def date_to_quarter_end(date):
     else:
         return date
 
-def add_quarter(df_long):
-    df_long['Quarter'] = df_long['Date'].apply(date_to_quarter_end)
+def Waitlist_add_quarter(df_long):
+    df_long['Quarter'] = df_long['Date'].apply(Waitlist_date_to_quarter_end)
     return df_long
 
 
 
-def nonpriority(df_long):
+def Waitlist_nonpriority(df_long):
     new_rows = pd.DataFrame()
     for date in df_long['Date'].unique():
         df_long_date = df_long[df_long['Date'] == date].copy()
@@ -236,7 +226,7 @@ def nonpriority(df_long):
     return df_long
 
          
-def add_population(df_long, population):
+def Waitlist_add_population(df_long, population):
     population = population[['DATE', 'POPULATION']]
     df_long = df_long.merge(population, how='left', left_on='Date', right_on='DATE')
     df_long['Percentage of population'] = df_long.apply(lambda row: row['Number'] / row['POPULATION'] * 100 if row['Category'] in ['Total individuals', 'Priority individuals', 'nonPriority individuals'] else float('nan'), axis=1)
@@ -250,7 +240,7 @@ def add_population(df_long, population):
     df_long = df_long.drop(['DATE'], axis=1)
     return df_long
 
-def final_long(df_long, save_latest, save):
+def Waitlist_final_long(df_long, save_latest, save):
     df_long['Category'] = df_long['Category'].str.replace('_', ' ')
     df_long['Category'] = df_long['Category'].str.title()
     df_long.loc[df_long['Category'].str.contains('Proportion'), 'Group'] = df_long.loc[df_long['Category'].str.contains('Proportion'), 'Category'].str.split(' - ').str[0]  
@@ -320,7 +310,7 @@ def final_long(df_long, save_latest, save):
     df_long.loc[df_long['Description4'] == '', 'Description4'] = '-'
     df_long.loc[df_long['Description6'] == 'Value', 'Description7'] = '-'
     df_long.loc[df_long['Description6'] == 'Value', 'Description6'] = '-'
-    df_long.to_csv(save, index=False)
+    df_long.to_csv(Waitlist_trend_longdf, index=False)
 
 
     df_latest = pd.DataFrame()
@@ -329,52 +319,27 @@ def final_long(df_long, save_latest, save):
         df_cat_latest = df_long[(df_long['Category'] == Category) & (df_long['Date'] == max_date)]
         df_latest = pd.concat([df_latest, df_cat_latest])
     df_latest = df_latest.reset_index(drop=True)
-    df_latest.to_csv(save_latest, index=False)
+    df_latest.to_csv(Waitlist_latestdf, index=False)
     return max_date
 
-def update_log(latest_date, update_date, dataset):
-    try:
-        update_log = pd.read_excel('DATA/SOURCE DATA/update_log.xlsx')
-    except:
-        update_log = pd.DataFrame(columns=['Dataset', 'Latest data point', 'Date last updated'])
-    new_row = pd.DataFrame({'Dataset': [dataset], 'Latest data point': [latest_date], 'Date last updated': [update_date]})
-    update_log = pd.concat([update_log, new_row], ignore_index=True)
-    update_log['Latest data point'] = pd.to_datetime(update_log['Latest data point'], format='%d/%m/%Y')
-    update_log['Date last updated'] = pd.to_datetime(update_log['Date last updated'], format='%d/%m/%Y')
-    update_log = update_log.sort_values(by=['Latest data point', 'Date last updated'], ascending=False).drop_duplicates(subset=['Dataset'], keep='first')
-    update_log['Latest data point'] = update_log['Latest data point'].dt.strftime('%d/%m/%Y')
-    update_log['Date last updated'] = update_log['Date last updated'].dt.strftime('%d/%m/%Y')                            
-    update_log.to_excel('DATA/SOURCE DATA/update_log.xlsx', index=False)
-    book = load_workbook('DATA/SOURCE DATA/update_log.xlsx')
-    sheet = book.active
-    for column_cells in sheet.columns:
-        length = max(len(as_text(cell.value)) for cell in column_cells)
-        sheet.column_dimensions[column_cells[0].column_letter].width = length
-    book.save('DATA/SOURCE DATA/update_log.xlsx')
-    return
-
-def as_text(value):
-    if value is None:
-        return ""
-    return str(value)
 
 def import_waitlist_data():
     try:
-        df = load_data(source_file)
-        df_long = convert_to_long_form(df)
-        df_long = gap_filler(df_long)
-        df_long = nonpriority(df_long)
-        df_long = calculate_Priority_proportion(df_long)
-        df_long = add_population(df_long, pd.read_csv(population_source_file))
-        df_long = month_diff(df_long)
-        df_long = year_diff(df_long)
-        df_long = calculate_cydiff(df_long)
-        df_long = calculate_12_month_average(df_long)
-        df_long = FYtdchange(df_long)
-        max_date = final_long(df_long, save_latest, save)
+        df = Waitlist_load_data('DATA/SOURCE DATA/Public housing/Waitlist_trend.xlsx')
+        df_long = Waitlist_convert_to_long_form(df)
+        df_long = Waitlist_gap_filler(df_long)
+        df_long = Waitlist_nonpriority(df_long)
+        df_long = Waitlist_calculate_Priority_proportion(df_long)
+        df_long = Waitlist_add_population(df_long, pd.read_csv(PopulationStateMonthlydf))
+        df_long = Waitlist_month_diff(df_long)
+        df_long = Waitlist_year_diff(df_long)
+        df_long = Waitlist_calculate_cydiff(df_long)
+        df_long = Waitlist_calculate_12_month_average(df_long)
+        df_long = Waitlist_FYtdchange(df_long)
+        max_date = Waitlist_final_long(df_long, Waitlist_latestdf, Waitlist_trend_longdf)
         update_date = pd.to_datetime('today').strftime('%d/%m/%Y')
-        clear_new_data(source_file)
-        update_log(max_date, update_date, dataset)
+        Waitlist_clear_new_data('DATA/SOURCE DATA/Public housing/Waitlist_trend.xlsx')
+        update_log(max_date, update_date, 'Waitlist trend - statewide')
     except:
         pass
     return
