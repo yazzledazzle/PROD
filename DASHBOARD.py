@@ -6,6 +6,7 @@ import openpyxl
 import os
 import requests
 import base64
+import csv
 
 Waitlist_latestdf = 'DATA/PROCESSED DATA/PUBLIC HOUSING/Waitlist_trend_latest.csv'
 Waitlist_trend_longdf = 'DATA/PROCESSED DATA/PUBLIC HOUSING/Waitlist_trend_long.csv'
@@ -2463,8 +2464,15 @@ def getPopulation():
     population = requests.request(method, url, headers=headers, auth=None)
 
     if population.status_code == 200:
-        csv_data = pd.read_csv(population.content.decode('utf-8'))
-        csv_data.to_csv('DATA/SOURCE DATA/Population/Population.csv', index=False)
+        content = population.content.decode('utf-8')
+        csv_lines = content.splitlines()
+        csv_reader = csv.reader(csv_lines)
+        
+        # Save the CSV content to a file
+        with open('population_data.csv', 'w', newline='') as csv_file:
+            csv_writer = csv.writer(csv_file)
+            for row in csv_reader:
+                csv_writer.writerow(row)
     return
 
 
