@@ -1,0 +1,73 @@
+Year,Category,Item,Subcategory,Region,Value
+2020-21,GDP/GSP,Economy,per capita,Australia,81305.0
+2020-21,GDP/GSP,Economy,per capita,WA,135999.0
+2020-21,GDP/GSP,Economy,per worker,Australia,171544.0
+2020-21,GDP/GSP,Economy,per worker,WA,276406.0
+2020-21,Household consumption,Economy,$m,WA,147569.0
+2020-21,Household consumption,Economy,$m,Australia,1184170.0
+2020-21,Govt Consumption,Economy,$m,WA,59166.0
+2020-21,Govt Consumption,Economy,$m,Australia,465900.0
+2020-21,Private Gross Fixed Capital Expenditiure,Economy,$m,WA,50335.0
+2020-21,Public Gross Fixed Capital Expenditiure,Economy,$m,Australia,386191.0
+2020-21,Private Gross Fixed Capital Expenditiure,Economy,$m,WA,14631.0
+2020-21,Public Gross Fixed Capital Expenditiure,Economy,$m,Australia,115213.0
+2015-16,Gross State Product,Economy,$m,WA,340214.0
+2016-17,Gross State Product,Economy,$m,WA,336669.0
+2017-18,Gross State Product,Economy,$m,WA,344380.0
+2018-19,Gross State Product,Economy,$m,WA,349785.0
+2019-20,Gross State Product,Economy,$m,WA,354114.0
+2020-21,Gross State Product,Economy,$m,WA,365904.0
+2021-22,Gross State Product,Economy,$m,WA,377257.0
+2022-23,Gross State Product,Economy,$m estimate,WA,393290.4225
+2023-24,Gross State Product,Economy,Budget $m,WA,402139.457
+2024-25,Gross State Product,Economy,Budget $m,WA,409176.8975
+2025-26,Gross State Product,Economy,Budget $m,WA,417360.4355
+2026-27,Gross State Product,Economy,Budget $m,WA,423620.842
+2021-22,CPI growth,Economy,Actual,WA,5.1
+2022-23,CPI growth,Economy,Estimate,WA,5.75
+2023-24,CPI growth,Economy,Budget,WA,3.5
+2024-25,CPI growth,Economy,Budget,WA,2.75
+2025-26,CPI growth,Economy,Budget,WA,2.5
+2026-27,CPI growth,Economy,Budget,WA,2.5
+2021-22,WPI growth,Economy,Actual,WA,2.2
+2022-23,WPI growth,Economy,Estimate,WA,3.75
+2023-24,WPI growth,Economy,Budget,WA,4.0
+2024-25,WPI growth,Economy,Budget,WA,3.75
+2025-26,WPI growth,Economy,Budget,WA,3.25
+2026-27,WPI growth,Economy,Budget,WA,3.0
+2021-22,Perth median house price growth,Economy,Actual,WA,3.6
+2022-23,Perth median house price growth,Economy,Estimate,WA,2.4
+2023-24,Perth median house price growth,Economy,Budget,WA,2.3
+2024-25,Perth median house price growth,Economy,Budget,WA,2.1
+2025-26,Perth median house price growth,Economy,Budget,WA,2.9
+2026-27,Perth median house price growth,Economy,Budget,WA,0.2
+2021-22,Revenue,Economy,Actual $m,WA,41657.784
+2022-23,Revenue,Economy,Estimate $m,WA,43101.822
+2023-24,Revenue,Economy,Budget $m,WA,43218.078
+2024-25,Revenue,Economy,Budget $m,WA,40566.754
+2025-26,Revenue,Economy,Budget $m,WA,40678.434
+2026-27,Revenue,Economy,Budget $m,WA,41524.966
+2021-22,Expenses,Economy,Actual $m,WA,35638.431
+2022-23,Expenses,Economy,Estimate $m,WA,38875.394
+2023-24,Expenses,Economy,Budget $m,WA,39925.287
+2024-25,Expenses,Economy,Budget $m,WA,38199.75
+2025-26,Expenses,Economy,Budget $m,WA,38138.495
+2026-27,Expenses,Economy,Budget $m,WA,38641.909
+2021-22,Net debt ratio,Economy,Actual,WA,7.221166808
+2022-23,Net debt ratio,Economy,Estimate,WA,6.333374755
+2023-24,Net debt ratio,Economy,Budget,WA,7.727212739
+2024-25,Net debt ratio,Economy,Budget,WA,8.997917921
+2025-26,Net debt ratio,Economy,Budget,WA,9.649571252
+2026-27,Net debt ratio,Economy,Budget,WA,9.729512497
+2021-22,Cash position,Economy,Actual $m,WA,4654.546
+2022-23,Cash position,Economy,Estimate $m,WA,1376.719
+2023-24,Cash position,Economy,Budget $m,WA,-1154.601
+2024-25,Cash position,Economy,Budget $m,WA,-2941.348
+2025-26,Cash position,Economy,Budget $m,WA,-2211.386
+2026-27,Cash position,Economy,Budget $m,WA,-395.802
+2021-22,Iron ore royalties,Economy,Actual $m,WA,84781.554
+2022-23,Iron ore royalties,Economy,Estimate $m,WA,65169.2622
+2023-24,Iron ore royalties,Economy,Budget $m,WA,43393.3305
+2024-25,Iron ore royalties,Economy,Budget $m,WA,40594.95
+2025-26,Iron ore royalties,Economy,Budget $m,WA,42317.352
+2026-27,Iron ore royalties,Economy,Budget $m,WA,42469.02

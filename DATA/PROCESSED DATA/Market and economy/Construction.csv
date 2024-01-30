@@ -1,0 +1,252 @@
+Date,Category,Subcategory,Region,Item,Value
+2012-06-30,Construction count,All residential,Australia,Construction activity,143775
+2013-06-30,Construction count,All residential,Australia,Construction activity,155295
+2014-06-30,Construction count,All residential,Australia,Construction activity,193180
+2015-06-30,Construction count,All residential,Australia,Construction activity,227785
+2016-06-30,Construction count,All residential,Australia,Construction activity,235494
+2017-06-30,Construction count,All residential,Australia,Construction activity,220092
+2019-06-30,Construction count,All residential,Australia,Construction activity,185940
+2020-06-30,Construction count,All residential,Australia,Construction activity,172677
+2021-06-30,Construction count,All residential,Australia,Construction activity,221394
+2022-06-30,Construction count,All residential,Australia,Construction activity,200419
+2012-06-30,Construction count,All residential,WA,Construction activity,18341
+2013-06-30,Construction count,All residential,WA,Construction activity,24473
+2014-06-30,Construction count,All residential,WA,Construction activity,30259
+2015-06-30,Construction count,All residential,WA,Construction activity,32363
+2016-06-30,Construction count,All residential,WA,Construction activity,24521
+2017-06-30,Construction count,All residential,WA,Construction activity,20266
+2018-06-30,Construction count,All residential,WA,Construction activity,18364
+2019-06-30,Construction count,All residential,WA,Construction activity,15363
+2020-06-30,Construction count,All residential,WA,Construction activity,14295
+2021-06-30,Construction count,All residential,WA,Construction activity,26886
+2022-06-30,Construction count,All residential,WA,Construction activity,18983
+2012-06-30,Construction count,Houses,Australia,Construction activity,89572
+2013-06-30,Construction count,Houses,Australia,Construction activity,92988
+2014-06-30,Construction count,Houses,Australia,Construction activity,108681
+2015-06-30,Construction count,Houses,Australia,Construction activity,118767
+2016-06-30,Construction count,Houses,Australia,Construction activity,119933
+2017-06-30,Construction count,Houses,Australia,Construction activity,116110
+2019-06-30,Construction count,Houses,Australia,Construction activity,110748
+2020-06-30,Construction count,Houses,Australia,Construction activity,104684
+2021-06-30,Construction count,Houses,Australia,Construction activity,148444
+2022-06-30,Construction count,Houses,Australia,Construction activity,125552
+2012-06-30,Construction count,Houses,WA,Construction activity,14938
+2013-06-30,Construction count,Houses,WA,Construction activity,19084
+2014-06-30,Construction count,Houses,WA,Construction activity,23763
+2015-06-30,Construction count,Houses,WA,Construction activity,23592
+2016-06-30,Construction count,Houses,WA,Construction activity,17731
+2017-06-30,Construction count,Houses,WA,Construction activity,14975
+2018-06-30,Construction count,Houses,WA,Construction activity,13537
+2019-06-30,Construction count,Houses,WA,Construction activity,12277
+2020-06-30,Construction count,Houses,WA,Construction activity,11226
+2021-06-30,Construction count,Houses,WA,Construction activity,23046
+2022-06-30,Construction count,Houses,WA,Construction activity,15969
+2012-06-30,Construction count,Other residential,Australia,Construction activity,54203
+2013-06-30,Construction count,Other residential,Australia,Construction activity,62307
+2014-06-30,Construction count,Other residential,Australia,Construction activity,84499
+2015-06-30,Construction count,Other residential,Australia,Construction activity,109018
+2016-06-30,Construction count,Other residential,Australia,Construction activity,115561
+2017-06-30,Construction count,Other residential,Australia,Construction activity,103982
+2019-06-30,Construction count,Other residential,Australia,Construction activity,75192
+2020-06-30,Construction count,Other residential,Australia,Construction activity,67993
+2021-06-30,Construction count,Other residential,Australia,Construction activity,72950
+2022-06-30,Construction count,Other residential,Australia,Construction activity,74867
+2012-06-30,Construction count,Other residential,WA,Construction activity,3403
+2013-06-30,Construction count,Other residential,WA,Construction activity,5389
+2014-06-30,Construction count,Other residential,WA,Construction activity,6496
+2015-06-30,Construction count,Other residential,WA,Construction activity,8771
+2016-06-30,Construction count,Other residential,WA,Construction activity,6790
+2017-06-30,Construction count,Other residential,WA,Construction activity,5291
+2018-06-30,Construction count,Other residential,WA,Construction activity,4827
+2019-06-30,Construction count,Other residential,WA,Construction activity,3086
+2020-06-30,Construction count,Other residential,WA,Construction activity,3069
+2021-06-30,Construction count,Other residential,WA,Construction activity,3840
+2022-06-30,Construction count,Other residential,WA,Construction activity,3014
+2012-06-30,Construction value $m,Residential,Australia,Construction activity,43372
+2013-06-30,Construction value $m,Residential,Australia,Construction activity,46540
+2014-06-30,Construction value $m,Residential,Australia,Construction activity,56995
+2015-06-30,Construction value $m,Residential,Australia,Construction activity,68146
+2016-06-30,Construction value $m,Residential,Australia,Construction activity,75082
+2017-06-30,Construction value $m,Residential,Australia,Construction activity,74434
+2019-06-30,Construction value $m,Residential,Australia,Construction activity,68835
+2020-06-30,Construction value $m,Residential,Australia,Construction activity,65675
+2021-06-30,Construction value $m,Residential,Australia,Construction activity,85222
+2022-06-30,Construction value $m,Residential,Australia,Construction activity,88081
+2012-06-30,Construction value $m,Residential,WA,Construction activity,5714
+2013-06-30,Construction value $m,Residential,WA,Construction activity,7018
+2014-06-30,Construction value $m,Residential,WA,Construction activity,8609
+2015-06-30,Construction value $m,Residential,WA,Construction activity,9462
+2016-06-30,Construction value $m,Residential,WA,Construction activity,7271
+2017-06-30,Construction value $m,Residential,WA,Construction activity,6251
+2018-06-30,Construction value $m,Residential,WA,Construction activity,5837
+2019-06-30,Construction value $m,Residential,WA,Construction activity,5004
+2020-06-30,Construction value $m,Residential,WA,Construction activity,4878
+2021-06-30,Construction value $m,Residential,WA,Construction activity,8729
+2022-06-30,Construction value $m,Residential,WA,Construction activity,7217
+2012-06-30,Construction value $m,Non-residential,Australia,Construction activity,32011
+2013-06-30,Construction value $m,Non-residential,Australia,Construction activity,27199
+2014-06-30,Construction value $m,Non-residential,Australia,Construction activity,36216
+2015-06-30,Construction value $m,Non-residential,Australia,Construction activity,31640
+2016-06-30,Construction value $m,Non-residential,Australia,Construction activity,36947
+2017-06-30,Construction value $m,Non-residential,Australia,Construction activity,44259
+2019-06-30,Construction value $m,Non-residential,Australia,Construction activity,46909
+2020-06-30,Construction value $m,Non-residential,Australia,Construction activity,51962
+2021-06-30,Construction value $m,Non-residential,Australia,Construction activity,54880
+2022-06-30,Construction value $m,Non-residential,Australia,Construction activity,58162
+2012-06-30,Construction value $m,Non-residential,WA,Construction activity,5125
+2014-06-30,Construction value $m,Non-residential,WA,Construction activity,5402
+2015-06-30,Construction value $m,Non-residential,WA,Construction activity,4171
+2016-06-30,Construction value $m,Non-residential,WA,Construction activity,4561
+2017-06-30,Construction value $m,Non-residential,WA,Construction activity,4786
+2018-06-30,Construction value $m,Non-residential,WA,Construction activity,4208
+2019-06-30,Construction value $m,Non-residential,WA,Construction activity,3893
+2020-06-30,Construction value $m,Non-residential,WA,Construction activity,4260
+2021-06-30,Construction value $m,Non-residential,WA,Construction activity,4530
+2022-06-30,Construction value $m,Non-residential,WA,Construction activity,5688
+2012-06-30,Construction value $m,All residential,Australia,Construction activity,75383
+2013-06-30,Construction value $m,All residential,Australia,Construction activity,73739
+2014-06-30,Construction value $m,All residential,Australia,Construction activity,93211
+2015-06-30,Construction value $m,All residential,Australia,Construction activity,99786
+2016-06-30,Construction value $m,All residential,Australia,Construction activity,112000
+2017-06-30,Construction value $m,All residential,Australia,Construction activity,119000
+2019-06-30,Construction value $m,All residential,Australia,Construction activity,116000
+2020-06-30,Construction value $m,All residential,Australia,Construction activity,118000
+2021-06-30,Construction value $m,All residential,Australia,Construction activity,140000
+2022-06-30,Construction value $m,All residential,Australia,Construction activity,146000
+2012-06-30,Construction value $m,All residential,WA,Construction activity,10839
+2013-06-30,Construction value $m,All residential,WA,Construction activity,7018
+2014-06-30,Construction value $m,All residential,WA,Construction activity,14011
+2015-06-30,Construction value $m,All residential,WA,Construction activity,13632
+2016-06-30,Construction value $m,All residential,WA,Construction activity,11832
+2017-06-30,Construction value $m,All residential,WA,Construction activity,11037
+2018-06-30,Construction value $m,All residential,WA,Construction activity,10045
+2019-06-30,Construction value $m,All residential,WA,Construction activity,8897
+2020-06-30,Construction value $m,All residential,WA,Construction activity,9138
+2021-06-30,Construction value $m,All residential,WA,Construction activity,13259
+2022-06-30,Construction value $m,All residential,WA,Construction activity,12905
+2012-12-31,Dwelling building activity,Under construction,WA,Construction activity,15362
+2013-03-31,Dwelling building activity,Under construction,WA,Construction activity,17015
+2013-06-30,Dwelling building activity,Under construction,WA,Construction activity,18706
+2013-09-30,Dwelling building activity,Under construction,WA,Construction activity,20321
+2013-12-31,Dwelling building activity,Under construction,WA,Construction activity,20372
+2014-03-31,Dwelling building activity,Under construction,WA,Construction activity,22865
+2014-06-30,Dwelling building activity,Under construction,WA,Construction activity,22919
+2014-09-30,Dwelling building activity,Under construction,WA,Construction activity,24652
+2014-12-31,Dwelling building activity,Under construction,WA,Construction activity,25931
+2015-03-31,Dwelling building activity,Under construction,WA,Construction activity,27197
+2015-06-30,Dwelling building activity,Under construction,WA,Construction activity,25635
+2015-09-30,Dwelling building activity,Under construction,WA,Construction activity,24661
+2015-12-31,Dwelling building activity,Under construction,WA,Construction activity,22322
+2016-03-31,Dwelling building activity,Under construction,WA,Construction activity,21295
+2016-06-30,Dwelling building activity,Under construction,WA,Construction activity,18443
+2016-09-30,Dwelling building activity,Under construction,WA,Construction activity,17257
+2016-12-31,Dwelling building activity,Under construction,WA,Construction activity,15039
+2017-03-31,Dwelling building activity,Under construction,WA,Construction activity,14481
+2017-06-30,Dwelling building activity,Under construction,WA,Construction activity,13956
+2017-09-30,Dwelling building activity,Under construction,WA,Construction activity,13360
+2017-12-31,Dwelling building activity,Under construction,WA,Construction activity,14658
+2018-03-31,Dwelling building activity,Under construction,WA,Construction activity,14168
+2018-06-30,Dwelling building activity,Under construction,WA,Construction activity,13307
+2018-09-30,Dwelling building activity,Under construction,WA,Construction activity,13359
+2018-12-31,Dwelling building activity,Under construction,WA,Construction activity,12506
+2019-03-31,Dwelling building activity,Under construction,WA,Construction activity,12266
+2019-06-30,Dwelling building activity,Under construction,WA,Construction activity,11804
+2019-09-30,Dwelling building activity,Under construction,WA,Construction activity,12156
+2019-12-31,Dwelling building activity,Under construction,WA,Construction activity,10997
+2020-03-31,Dwelling building activity,Under construction,WA,Construction activity,11010
+2020-06-30,Dwelling building activity,Under construction,WA,Construction activity,10513
+2020-09-30,Dwelling building activity,Under construction,WA,Construction activity,10554
+2020-12-31,Dwelling building activity,Under construction,WA,Construction activity,13380
+2021-03-31,Dwelling building activity,Under construction,WA,Construction activity,17019
+2021-06-30,Dwelling building activity,Under construction,WA,Construction activity,19825
+2021-09-30,Dwelling building activity,Under construction,WA,Construction activity,22424
+2021-12-31,Dwelling building activity,Under construction,WA,Construction activity,24752
+2022-03-31,Dwelling building activity,Under construction,WA,Construction activity,25292
+2022-06-30,Dwelling building activity,Under construction,WA,Construction activity,26687
+2022-09-30,Dwelling building activity,Under construction,WA,Construction activity,27143
+2022-12-31,Dwelling building activity,Under construction,WA,Construction activity,27439
+2012-12-31,Dwelling building activity,Started construction,WA,Construction activity,6649
+2013-03-31,Dwelling building activity,Started construction,WA,Construction activity,5851
+2013-06-30,Dwelling building activity,Started construction,WA,Construction activity,6593
+2013-09-30,Dwelling building activity,Started construction,WA,Construction activity,7221
+2013-12-31,Dwelling building activity,Started construction,WA,Construction activity,7091
+2014-03-31,Dwelling building activity,Started construction,WA,Construction activity,7533
+2014-06-30,Dwelling building activity,Started construction,WA,Construction activity,7793
+2014-09-30,Dwelling building activity,Started construction,WA,Construction activity,8953
+2014-12-31,Dwelling building activity,Started construction,WA,Construction activity,8354
+2015-03-31,Dwelling building activity,Started construction,WA,Construction activity,7692
+2015-06-30,Dwelling building activity,Started construction,WA,Construction activity,6733
+2015-09-30,Dwelling building activity,Started construction,WA,Construction activity,7608
+2015-12-31,Dwelling building activity,Started construction,WA,Construction activity,6714
+2016-03-31,Dwelling building activity,Started construction,WA,Construction activity,5430
+2016-06-30,Dwelling building activity,Started construction,WA,Construction activity,5761
+2016-09-30,Dwelling building activity,Started construction,WA,Construction activity,5499
+2016-12-31,Dwelling building activity,Started construction,WA,Construction activity,4767
+2017-03-31,Dwelling building activity,Started construction,WA,Construction activity,4604
+2017-06-30,Dwelling building activity,Started construction,WA,Construction activity,4642
+2017-09-30,Dwelling building activity,Started construction,WA,Construction activity,4818
+2017-12-31,Dwelling building activity,Started construction,WA,Construction activity,5544
+2018-03-31,Dwelling building activity,Started construction,WA,Construction activity,4044
+2018-06-30,Dwelling building activity,Started construction,WA,Construction activity,3988
+2018-09-30,Dwelling building activity,Started construction,WA,Construction activity,4443
+2018-12-31,Dwelling building activity,Started construction,WA,Construction activity,3665
+2019-03-31,Dwelling building activity,Started construction,WA,Construction activity,3372
+2019-06-30,Dwelling building activity,Started construction,WA,Construction activity,4041
+2019-09-30,Dwelling building activity,Started construction,WA,Construction activity,3699
+2019-12-31,Dwelling building activity,Started construction,WA,Construction activity,3402
+2020-03-31,Dwelling building activity,Started construction,WA,Construction activity,3560
+2020-06-30,Dwelling building activity,Started construction,WA,Construction activity,2940
+2020-09-30,Dwelling building activity,Started construction,WA,Construction activity,3510
+2020-12-31,Dwelling building activity,Started construction,WA,Construction activity,6089
+2021-03-31,Dwelling building activity,Started construction,WA,Construction activity,6853
+2021-06-30,Dwelling building activity,Started construction,WA,Construction activity,6889
+2021-09-30,Dwelling building activity,Started construction,WA,Construction activity,6129
+2021-12-31,Dwelling building activity,Started construction,WA,Construction activity,5972
+2022-03-31,Dwelling building activity,Started construction,WA,Construction activity,3885
+2022-06-30,Dwelling building activity,Started construction,WA,Construction activity,5375
+2022-09-30,Dwelling building activity,Started construction,WA,Construction activity,3510
+2022-12-31,Dwelling building activity,Started construction,WA,Construction activity,4527
+2012-12-31,Dwelling building activity,Completed construction,WA,Construction activity,4492
+2013-03-31,Dwelling building activity,Completed construction,WA,Construction activity,4101
+2013-06-30,Dwelling building activity,Completed construction,WA,Construction activity,4855
+2013-09-30,Dwelling building activity,Completed construction,WA,Construction activity,5517
+2013-12-31,Dwelling building activity,Completed construction,WA,Construction activity,7007
+2014-03-31,Dwelling building activity,Completed construction,WA,Construction activity,5010
+2014-06-30,Dwelling building activity,Completed construction,WA,Construction activity,7672
+2014-09-30,Dwelling building activity,Completed construction,WA,Construction activity,6995
+2014-12-31,Dwelling building activity,Completed construction,WA,Construction activity,7086
+2015-03-31,Dwelling building activity,Completed construction,WA,Construction activity,6358
+2015-06-30,Dwelling building activity,Completed construction,WA,Construction activity,8269
+2015-09-30,Dwelling building activity,Completed construction,WA,Construction activity,8546
+2015-12-31,Dwelling building activity,Completed construction,WA,Construction activity,9008
+2016-03-31,Dwelling building activity,Completed construction,WA,Construction activity,6394
+2016-06-30,Dwelling building activity,Completed construction,WA,Construction activity,8608
+2016-09-30,Dwelling building activity,Completed construction,WA,Construction activity,6588
+2016-12-31,Dwelling building activity,Completed construction,WA,Construction activity,6945
+2017-03-31,Dwelling building activity,Completed construction,WA,Construction activity,5156
+2017-06-30,Dwelling building activity,Completed construction,WA,Construction activity,5189
+2017-09-30,Dwelling building activity,Completed construction,WA,Construction activity,5173
+2017-12-31,Dwelling building activity,Completed construction,WA,Construction activity,4280
+2018-03-31,Dwelling building activity,Completed construction,WA,Construction activity,4459
+2018-06-30,Dwelling building activity,Completed construction,WA,Construction activity,4777
+2018-09-30,Dwelling building activity,Completed construction,WA,Construction activity,4290
+2018-12-31,Dwelling building activity,Completed construction,WA,Construction activity,4517
+2019-03-31,Dwelling building activity,Completed construction,WA,Construction activity,3501
+2019-06-30,Dwelling building activity,Completed construction,WA,Construction activity,4511
+2019-09-30,Dwelling building activity,Completed construction,WA,Construction activity,3282
+2019-12-31,Dwelling building activity,Completed construction,WA,Construction activity,4383
+2020-03-31,Dwelling building activity,Completed construction,WA,Construction activity,3566
+2020-06-30,Dwelling building activity,Completed construction,WA,Construction activity,3418
+2020-09-30,Dwelling building activity,Completed construction,WA,Construction activity,3378
+2020-12-31,Dwelling building activity,Completed construction,WA,Construction activity,3132
+2021-03-31,Dwelling building activity,Completed construction,WA,Construction activity,3020
+2021-06-30,Dwelling building activity,Completed construction,WA,Construction activity,4124
+2021-09-30,Dwelling building activity,Completed construction,WA,Construction activity,3441
+2021-12-31,Dwelling building activity,Completed construction,WA,Construction activity,3362
+2022-03-31,Dwelling building activity,Completed construction,WA,Construction activity,3116
+2022-06-30,Dwelling building activity,Completed construction,WA,Construction activity,3777
+2022-09-30,Dwelling building activity,Completed construction,WA,Construction activity,3017
+2022-12-31,Dwelling building activity,Completed construction,WA,Construction activity,4081
+2024-06-30,Stimulus,Off-the-Plan Transfer Duty Concession,WA,Budget $m,14
+2025-06-30,Stimulus,Off-the-Plan Transfer Duty Concession,WA,Budget $m,19
+2026-06-30,Stimulus,Off-the-Plan Transfer Duty Concession,WA,Budget $m,27
