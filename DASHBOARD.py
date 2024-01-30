@@ -5,7 +5,6 @@ import plotly.express as px
 import openpyxl
 import os
 import requests
-import base64
 
 Waitlist_latestdf = 'DATA/PROCESSED DATA/PUBLIC HOUSING/Waitlist_trend_latest.csv'
 Waitlist_trend_longdf = 'DATA/PROCESSED DATA/PUBLIC HOUSING/Waitlist_trend_long.csv'
@@ -2454,14 +2453,15 @@ def getPopulation():
     method = "get"
     url = "https://api.data.abs.gov.au/data/ABS,ERP_Q,1.0.0/1.2+1+3.A80+A75+A70+A65+A60+A55+A50+A45+A40+A35+A25+A30+A20+A15+A10+A59+A04+TOT..Q?startPeriod=2011-Q1"
     auth_string = f"{'x-api-key'}:{st.secrets['abskey']}"
-    auth_string = auth_string.encode("ascii")
-    auth_string = base64.b64encode(auth_string)
     headers = {
         'Accept': 'application/vnd.sdmx.data+csv;labels=both',
         'Authorization' : f"Basic {auth_string.decode('ascii')}"
     }
     population = requests.request(method, url, headers=headers, auth=None)
-    population.to_csv('DATA/SOURCE DATA/Population/Population.csv', index=False)
+
+    if population.status_code == 200:
+        csv_data = pd.read_csv(population.content.decode('utf-8'))
+        csv_data.to_csv('DATA/SOURCE DATA/Population/Population.csv', index=False)
     return
 
 
