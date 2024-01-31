@@ -3395,15 +3395,6 @@ def census(census_data):
         #move xaxis label up
         fig.update_xaxes(title_standoff=0)
         st.plotly_chart(fig, use_container_width=True)
-
-
-
-
-
-
-
-
-
     return
 
 
