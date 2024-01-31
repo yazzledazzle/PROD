@@ -2360,7 +2360,7 @@ def upload_data():
                 ref_link = st.text_input('Enter link URL')
             upload_link = st.button('Add link')
             if upload_link:
-                new_row = pd.DataFrame({'Filter': [selectfilter], 'caption': [caption], 'File': [''], 'Reference text': [ref_text], 'Reference link': [ref_link]})
+                new_row = pd.DataFrame({'Filter': [selectfilter], 'Reference text': [ref_text], 'Reference link': [ref_link]})
                 reffile = pd.concat([reffile, new_row], ignore_index=True)
                 st.write('Link added')
                 reffile.to_excel('assets/External.xlsx', index=False)
