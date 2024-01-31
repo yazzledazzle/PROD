@@ -7,6 +7,7 @@ import os
 import requests
 import base64
 import csv
+import PIL
 
 Waitlist_latestdf = 'DATA/PROCESSED DATA/PUBLIC HOUSING/Waitlist_trend_latest.csv'
 Waitlist_trend_longdf = 'DATA/PROCESSED DATA/PUBLIC HOUSING/Waitlist_trend_long.csv'
@@ -1810,15 +1811,19 @@ def ROGS_homelessness():
 
 def external_resources():
     external = pd.read_excel('assets/External.xlsx', sheet_name='Sheet1')
-    st.markdown(f'<h3><a href ="https://www.endhomelessnesswa.com/bynamelist-datapage">Visit by-name list site </a></h3>', unsafe_allow_html=True)
+    resource_filter = st.selectbox('Select resource group', external['Filter'].unique())
+    external = external[external['Filter'] == resource_filter]
     for i in external.index:
-        st.markdown(f'<h5>{external["caption"][i]}</h5>', unsafe_allow_html=True)
-        try:
-            file = 'assets/' + external['File'][i]
-            st.image(file, use_column_width=True)
-        except:
-            pass
-        st.markdown(f'<a href="{external["Reference link"][i]}">Source: {external["Reference text"][i]}</a>', unsafe_allow_html=True)
+        if external['Type'][i] == 'Link':
+            st.markdown(f'<h5><a href="{external["Reference link"][i]}">{external["Reference text"][i]}</a></h5>', unsafe_allow_html=True)
+        else:
+            st.markdown(f'<h5>{external["caption"][i]}</h5>', unsafe_allow_html=True)
+            try:
+                file = 'assets/' + external['File'][i]
+                st.image(file, use_column_width=True)
+            except:
+                pass
+            st.markdown(f'<a href="{external["Reference link"][i]}">Source: {external["Reference text"][i]}</a>', unsafe_allow_html=True)
     return
 
 def airbnb_wa():
@@ -2109,6 +2114,7 @@ def upload_data():
         items = df['Item'].unique().tolist()
         #remove 'Waiting time (WA total only -extra data point)'
         items.remove('Waiting time (WA total only -extra data point)')
+        items.remove('New tenancies')
 
         with col2: 
             select_item = st.selectbox('Select item', items)
@@ -2134,20 +2140,245 @@ def upload_data():
             if add_dwelling_need_data:
                 df = pd.read_excel(file)
                 df0 = pd.read_csv(Waitlist_breakdownsdf)
+                df['Item'] = "Dwelling need"
                 df['Date'] = date_data
                 df = df.rename(columns={'Total applications': 'Total Waitlist - Applications', 'Total individuals': 'Total Waitlist - Individuals', 'Priority applications': 'Priority Waitlist - Applications', 'Priority individuals': 'Priority Waitlist - Individuals', 'Dwelling need': 'Detail'})
-                df = df.melt(id_vars=['Detail', 'Date'], var_name='Category0', value_name='Value')
+                df = df.melt(id_vars=['Detail', 'Date', 'Item'], var_name='Category0', value_name='Value')
                 df[['Category1', 'Category2']] = df['Category0'].str.split(' - ', expand=True)
                 df = df.drop(columns=['Category0'])
                 df = df.rename(columns={'Category1': 'Category'})
                 df = df.rename(columns={'Category2': 'Subcategory'})
                 df['Region'] = 'WA'
                 df = pd.concat([df0, df], ignore_index=True)
-                df.to_csv(Waitlist_breakdownsdf, index=False)                
-
+                df.to_csv(Waitlist_breakdownsdf, index=False)
+                st.write('Data added')
+        if select_item == "Region need":
+            template = 'DATA/SOURCE DATA/TEMPLATES/RegionNeedTemplate.xlsx'
+            with col3:
+                st.markdown(f'</br>', unsafe_allow_html=True)
+                with open(template, 'rb') as file:
+                    btn = st.download_button(
+                        label="Download Region Need Template",
+                        data=file,
+                        file_name="RegionNeedTemplate.xlsx",
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    )
+            with col1:
+                file = st.file_uploader("Upload completed template")
+            with col2:
+                date_data = st.date_input('Enter date of data', format="DD/MM/YYYY", key='date_data')
+            with col3:
+                st.markdown(f'</br>', unsafe_allow_html=True)
+                st.markdown(f'</br>', unsafe_allow_html=True)
+                add_region_need_data = st.button('Add data')
+            if add_region_need_data:
+                df = pd.read_excel(file)
+                df0 = pd.read_csv(Waitlist_breakdownsdf)
+                df['Item'] = "Region need"
+                df = df.rename(columns={'Region need': 'Region'})
+                df['Date'] = date_data
+                df = df.melt(id_vars=['Region', 'Date', 'Item'], var_name='Category0', value_name='Value')
+                df[['Category', 'Subcategory']] = df['Category0'].str.split(' - ', expand=True)
+                df = df.drop(columns=['Category0'])
+                df = pd.concat([df0, df], ignore_index=True)
+                df.to_csv(Waitlist_breakdownsdf, index=False)
+                st.write('Data added')
+        if select_item == "Waiting time by dwelling need":
+            template = 'DATA/SOURCE DATA/TEMPLATES/WaitingTimebyDwellingNeedTemplate.xlsx'
+            with col3:
+                st.markdown(f'</br>', unsafe_allow_html=True)
+                with open(template, 'rb') as file:
+                    btn = st.download_button(
+                        label="Download Waiting Time by Dwelling Need Template",
+                        data=file,
+                        file_name="WaitingTimebyDwellingNeedTemplate.xlsx",
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    )
+            with col1:
+                file = st.file_uploader("Upload completed template")
+            with col2:
+                date_data = st.date_input('Enter date of data', format="DD/MM/YYYY", key='date_data')
+            with col3:
+                st.markdown(f'</br>', unsafe_allow_html=True)
+                st.markdown(f'</br>', unsafe_allow_html=True)
+                add_waiting_time_by_dwelling_need_data = st.button('Add data')
+            if add_waiting_time_by_dwelling_need_data:
+                df = pd.read_excel(file)
+                df0 = pd.read_csv(Waitlist_breakdownsdf)
+                df['Item'] = "Waiting time by dwelling need"
+                df = df.rename(columns={'Waiting time by dwelling need': 'Detail'})
+                df['Date'] = date_data
+                df = df.melt(id_vars=['Detail', 'Date', 'Item'], var_name='Category0', value_name='Value')
+                df[['Category', 'Subcategory']] = df['Category0'].str.split(' - ', expand=True)
+                df = df.drop(columns=['Category0'])
+                df = pd.concat([df0, df], ignore_index=True)
+                df.to_csv(Waitlist_breakdownsdf, index=False)
+                st.write('Data added')
+        if select_item == "Waiting time by region":
+            template = 'DATA/SOURCE DATA/TEMPLATES/WaitingTimebyRegionTemplate.xlsx'
+            with col3:
+                st.markdown(f'</br>', unsafe_allow_html=True)
+                with open(template, 'rb') as file:
+                    btn = st.download_button(
+                        label="Download Waiting Time by Region Template",
+                        data=file,
+                        file_name="WaitingTimebyRegionTemplate.xlsx",
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    )
+            with col1:
+                file = st.file_uploader("Upload completed template")
+            with col2:
+                date_data = st.date_input('Enter date of data', format="DD/MM/YYYY", key='date_data')
+            with col3:
+                st.markdown(f'</br>', unsafe_allow_html=True)
+                st.markdown(f'</br>', unsafe_allow_html=True)
+                add_waiting_time_by_region_data = st.button('Add data')
+            if add_waiting_time_by_region_data:
+                df = pd.read_excel(file)
+                df0 = pd.read_csv(Waitlist_breakdownsdf)
+                df['Item'] = "Waiting time by region"
+                df = df.rename(columns={'Waiting time by region': 'Region'})
+                df['Date'] = date_data
+                df = df.melt(id_vars=['Region', 'Date', 'Item'], var_name='Category0', value_name='Value')
+                df[['Category', 'Subcategory']] = df['Category0'].str.split(' - ', expand=True)
+                df = df.drop(columns=['Category0'])
+                df = pd.concat([df0, df], ignore_index=True)
+                df.to_csv(Waitlist_breakdownsdf, index=False)
+                st.write('Data added')
+        if select_item == "New tenancies by dwelling need":
+            template = 'DATA/SOURCE DATA/TEMPLATES/NewTenanciesbyDwellingNeedTemplate.xlsx'
+            with col3:
+                st.markdown(f'</br>', unsafe_allow_html=True)
+                with open(template, 'rb') as file:
+                    btn = st.download_button(
+                        label="Download New Tenancies by Dwelling Need Template",
+                        data=file,
+                        file_name="NewTenanciesbyDwellingNeedTemplate.xlsx",
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    )
+            with col1:
+                file = st.file_uploader("Upload completed template")
+            with col2:
+                date_data = st.date_input('Enter date of data', format="DD/MM/YYYY", key='date_data')
+            with col3:
+                st.markdown(f'</br>', unsafe_allow_html=True)
+                st.markdown(f'</br>', unsafe_allow_html=True)
+                add_new_tenancies_by_dwelling_need_data = st.button('Add data')
+            if add_new_tenancies_by_dwelling_need_data:
+                df = pd.read_excel(file)
+                df0 = pd.read_csv(Waitlist_breakdownsdf)
+                df['Item'] = "New tenancies by dwelling need"
+                df = df.rename(columns={'New tenancies by dwelling need': 'Detail'})
+                df['Date'] = date_data
+                df = df.melt(id_vars=['Detail', 'Date', 'Item'], var_name='Category0', value_name='Value')
+                df[['Category', 'Subcategory']] = df['Category0'].str.split(' - ', expand=True)
+                df = df.drop(columns=['Category0'])
+                df = pd.concat([df0, df], ignore_index=True)
+                df.to_csv(Waitlist_breakdownsdf, index=False)
+                st.write('Data added')
+        if select_item == "New tenancies by region":
+            template = 'DATA/SOURCE DATA/TEMPLATES/NewTenanciesbyRegionTemplate.xlsx'
+            with col3:
+                st.markdown(f'</br>', unsafe_allow_html=True)
+                with open(template, 'rb') as file:
+                    btn = st.download_button(
+                        label="Download New Tenancies by Region Template",
+                        data=file,
+                        file_name="NewTenanciesbyRegionTemplate.xlsx",
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    )
+            with col1:
+                file = st.file_uploader("Upload completed template")
+            with col2:
+                date_data = st.date_input('Enter date of data', format="DD/MM/YYYY", key='date_data')
+            with col3:
+                st.markdown(f'</br>', unsafe_allow_html=True)
+                st.markdown(f'</br>', unsafe_allow_html=True)
+                add_new_tenancies_by_region_data = st.button('Add data')
+            if add_new_tenancies_by_region_data:
+                df = pd.read_excel(file)
+                df0 = pd.read_csv(Waitlist_breakdownsdf)
+                df['Item'] = "New tenancies by region"
+                df = df.rename(columns={'New tenancies by region': 'Region'})
+                df['Date'] = date_data
+                df = df.melt(id_vars=['Region', 'Date', 'Item'], var_name='Category0', value_name='Value')
+                df[['Category', 'Subcategory']] = df['Category0'].str.split(' - ', expand=True)
+                df = df.drop(columns=['Category0'])
+                df = pd.concat([df0, df], ignore_index=True)
+                df.to_csv(Waitlist_breakdownsdf, index=False)
+                st.write('Data added')
+    if select_data_to_upload == 'Images or links':
+        reffile = pd.read_excel('assets/External.xlsx')
+        col1, col2 = st.columns(2)
+        with col1:
+            type = st.radio('Select type of content to upload', ['Image', 'Link'], horizontal=True)
+        if type == 'Image':
+            filterimage = reffile[reffile['Type'] == 'Image']
+            filterimagelist = filterimage['Filter'].unique()
+            filterimagelist = filterimagelist.tolist()
+            #append other
+            filterimagelist.append('Other')
+            with col2:    
+                selectfilter = st.selectbox('Select filter', filterimagelist)
+            if selectfilter == 'Other':
+                selectfilter = st.text_input('Enter filter')
+            col1, col2 = st.columns(2)
+            with col1:
+                image = st.file_uploader("Select image file")
+                ref_text = st.text_input('Enter reference text')
+            with col2:
+                image_name = st.text_input('Enter image filename')
+                caption = st.text_input('Enter heading for image')
+                ref_link = st.text_input('Enter reference link')
             
-
-            
+            if image is not None:
+                upload_image = st.button('Upload image')
+                if upload_image:
+                    saveimageas = f'DATA/IMAGES/{image_name}.png'
+                    image = PIL.Image.open(image)
+                    image.save(saveimageas)
+                    new_row = pd.DataFrame({'Filter': [selectfilter], 'caption': [caption], 'File': [saveimageas], 'Reference text': [ref_text], 'Reference link': [ref_link]})
+                    reffile = pd.concat([reffile, new_row], ignore_index=True)
+                    reffile.to_excel('assets/External.xlsx', index=False)
+                    st.write('Image uploaded')
+        if type == 'Link':
+            filterlink = reffile[reffile['Type'] == 'Link']
+            filterlinklist = filterlink['Filter'].unique()
+            filterlinklist = filterlinklist.tolist()
+            #append other
+            filterlinklist.append('Other')
+            with col2:
+                selectfilter = st.selectbox('Select filter', filterlinklist)
+            if selectfilter == 'Other':
+                selectfilter = st.text_input('Enter filter')
+            col1, col2 = st.columns(2)
+            with col1:
+                ref_text = st.text_input('Enter link text')
+                ref_link = st.text_input('Enter link URL')
+            upload_link = st.button('Add link')
+            if upload_link:
+                new_row = pd.DataFrame({'Filter': [selectfilter], 'caption': [caption], 'File': [''], 'Reference text': [ref_text], 'Reference link': [ref_link]})
+                reffile = pd.concat([reffile, new_row], ignore_index=True)
+                st.write('Link added')
+                reffile.to_excel('assets/External.xlsx', index=False)
+        st.markdown(f'</br>', unsafe_allow_html=True)
+        st.markdown(f'***Reorder or remove external content***')
+        st.markdown(f'To delete or re-order, download external reference file below, save changes and re-upload the file. Content is displayed in the order it appears in the file.')
+        col1, col2 = st.columns(2)
+        with col1:
+            with open('assets/External.xlsx', 'rb') as file:
+                    btn = st.download_button(
+                    label="Download external content reference file",
+                    data=file,
+                    file_name="External.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    ) 
+            file = st.file_uploader("Upload replacement reference file")
+        if file is not None:
+            reffile = pd.read_excel(file)
+            reffile.to_excel('assets/External.xlsx', index=False)
+            st.write('File uploaded')
+        
     return
 
 def as_text(value):
