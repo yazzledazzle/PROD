@@ -985,7 +985,7 @@ def waitlist_breakdowns():
             clean.loc['WA total'] = clean.sum()    
             clean['Priority %'] = clean['Priority'] / clean['Total'] * 100
             clean['Priority %'] = clean['Priority %'].round(1)
-            region_need = Waitlist_breakdowns[Waitlist_breakdowns['Item'] == 'Region need']
+            region_need = Waitlist_breakdownsdf[Waitlist_breakdownsdf['Item'] == 'Region need']
             region_dates = region_need['Date'].unique()
             latest_date = region_dates.max()
             region_need = region_need[region_need['Date'] == latest_date]
@@ -1818,15 +1818,17 @@ def external_resources():
     external = external[external['Filter'] == resource_filter]
     for i in external.index:
         if external['Type'][i] == 'Link':
-            st.markdown(f'<h5><a href="{external["Reference link"][i]}">{external["Reference text"][i]}</a></h5>', unsafe_allow_html=True)
+            
+                st.markdown(f'<a href="{external["Reference link"][i]}">{external["Reference text"][i]}</a>', unsafe_allow_html=True)
         else:
             st.markdown(f'<h5>{external["caption"][i]}</h5>', unsafe_allow_html=True)
             try:
                 file = 'assets/' + external['File'][i]
                 st.image(file, use_column_width=True)
+                st.markdown(f'<a href="{external["Reference link"][i]}">Source: {external["Reference text"][i]}</a>', unsafe_allow_html=True)
             except:
                 pass
-            st.markdown(f'<a href="{external["Reference link"][i]}">Source: {external["Reference text"][i]}</a>', unsafe_allow_html=True)
+            
     return
 
 def airbnb_wa():
