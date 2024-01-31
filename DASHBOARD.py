@@ -75,7 +75,7 @@ def home():
         upload_data()
         show_update_log()
     elif goto == 'Census':
-        census_data = st.sidebar.selectbox('Select dataset', ['Total by state', 'Geographic breakdown', 'Aboriginal and Torres Strait Islander status', 'Sex and Age'])
+        census_data = st.sidebar.selectbox('Select dataset', ['Total by state', 'Geographic breakdown', 'Aboriginal and Torres Strait Islander status'])
         census(census_data)
     return
 
@@ -3317,18 +3317,93 @@ def census(census_data):
             
             fig = go.Figure()
             fig.add_trace(go.Pie(labels=filtereddf16['OPGP HOMELESSNESS OPERATIONAL GROUPS'], values=filtereddf16['Value'], name='2016'))
-            fig.update_layout(title='Homelessness groups - 2016', yaxis_title='persons')
+            fig.update_layout(title=f'Homelessness groups - 2016 - {sa4}', yaxis_title='persons')
             if datalabels == 'On':
                 fig.update_traces(textposition='inside', textinfo='percent+value')
             with col1:
                 st.plotly_chart(fig)
             fig = go.Figure()
             fig.add_trace(go.Pie(labels=filtereddf21['OPGP HOMELESSNESS OPERATIONAL GROUPS'], values=filtereddf21['Value'], name='2021'))
-            fig.update_layout(title='Homelessness groups - 2021', xaxis_title="Homelessness operational group", yaxis_title='Value')
+            fig.update_layout(title=f'Homelessness groups - 2021 - {sa4}', xaxis_title="Homelessness operational group", yaxis_title='Value')
             if datalabels == 'On':
                 fig.update_traces(textposition='inside', textinfo='percent+value')
             with col2:    
                 st.plotly_chart(fig)
+    elif census_data == 'Aboriginal and Torres Strait Islander status':
+        df = pd.read_csv('DATA/PROCESSED DATA/Census/Multiyear/ATSIState_1621.csv')
+        df = df.melt(id_vars=['INGP INDIGENOUS STATUS', 'STATE', 'CENSUS_YEAR'], var_name='Group', value_name='Value')
+        
+        df['Group'] = df['Group'].str.replace('PERSONS IN', '')
+        #replace PERSONS WHO ARE
+        df['Group'] = df['Group'].str.replace('PERSONS WHO ARE', '')
+        #replace PERSONS LIVING IN 
+        df['Group'] = df['Group'].str.replace('PERSONS LIVING IN', '')
+        #replace PERSONS 
+        df['Group'] = df['Group'].str.replace('PERSONS', '')
+        #lower case
+        df['Group'] = df['Group'].str.lower()
+        
+        #drop INGP INDIGENOUS STATUS = Total
+        df = df[df['INGP INDIGENOUS STATUS']!='Total']
+        #IN state, replace Western Australia - with 'WA', South Australia - with 'SA', New South Wales - with 'NSW', Victoria - with 'Vic', Queensland - with 'Qld', Tasmania - with 'Tas', Northern Territory - with 'NT', Australian Capital Territory - with 'ACT'
+        df['STATE'] = df['STATE'].str.replace('Western Australia', 'WA')
+        df['STATE'] = df['STATE'].str.replace('South Australia', 'SA')
+        df['STATE'] = df['STATE'].str.replace('New South Wales', 'NSW')
+        df['STATE'] = df['STATE'].str.replace('Victoria', 'Vic')
+        df['STATE'] = df['STATE'].str.replace('Queensland', 'Qld')
+        df['STATE'] = df['STATE'].str.replace('Tasmania', 'Tas')
+        df['STATE'] = df['STATE'].str.replace('Northern Territory', 'NT')
+        df['STATE'] = df['STATE'].str.replace('Australian Capital Territory', 'ACT')
+
+        #YEAR ASCENDING ORDER
+        df = df.sort_values(by=['CENSUS_YEAR'], ascending=True)
+        groupslist = df['Group'].unique()
+        #remove TOTAL
+        groupslist = groupslist[groupslist!='total']
+        #remove Not applicable
+        groupslist = groupslist[groupslist!='not applicable']
+        group_select = st.multiselect('Select group', groupslist, default = groupslist)
+        
+        df2 = df[df['Group'].isin(group_select)]
+        #select STATE
+        col1, col2 = st.columns(2)
+        with col1:
+            state = st.selectbox('Select state', df2['STATE'].unique(), index=6)
+        with col2:
+            year = st.selectbox('Select year', df2['CENSUS_YEAR'].unique(), index=1)
+        df2 = df2[df2['STATE']==state]
+        df2 = df2[df2['CENSUS_YEAR']==year]
+        fig = go.Figure()
+        for group in df['Group'].unique():
+            filtereddf = df2[df2['Group']==group]
+            fig.add_trace(go.Bar(x=filtereddf['INGP INDIGENOUS STATUS'], y=filtereddf['Value'], name=group, text=filtereddf['Value'], textposition='inside', texttemplate='%{text:.2s}'))
+        fig.update_layout(barmode='stack', title=f'Aboriginal and Torres Strait Islander status - {state}', yaxis_title='persons', height=800, xaxis_tickangle=-45)
+        st.plotly_chart(fig, use_container_width=True)
+        dftotal = df[df['Group']=='total']
+        #filter year ascending
+        dftotal = dftotal.sort_values(by=['CENSUS_YEAR'], ascending=True)
+        #year as string
+        dftotal['CENSUS_YEAR'] = dftotal['CENSUS_YEAR'].astype(str)
+        selectyear = st.selectbox('Select year', dftotal['CENSUS_YEAR'].unique(), index=1, key='censusatsiselectyear2')
+        dftotal = dftotal[dftotal['CENSUS_YEAR']==selectyear]
+        fig = go.Figure()
+        for atsistatus in dftotal['INGP INDIGENOUS STATUS'].unique():
+            filtereddf = dftotal[dftotal['INGP INDIGENOUS STATUS']==atsistatus]
+            fig.add_trace(go.Bar(x=filtereddf['STATE'], y=filtereddf['Value'], name=atsistatus, text=filtereddf['Value'], textposition='inside', texttemplate='%{text:.2s}'))
+            fig.update_layout(barmode='stack', title=f'Aboriginal and Torres Strait Islander status - all homelessness groups', yaxis_title='persons', height=600, xaxis_tickangle=-45)
+            
+        #move xaxis label up
+        fig.update_xaxes(title_standoff=0)
+        st.plotly_chart(fig, use_container_width=True)
+
+
+
+
+
+
+
+
+
     return
 
 
